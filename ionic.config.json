@@ -1,0 +1,7 @@
+{
+  "name": "PierogiesCalculator",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

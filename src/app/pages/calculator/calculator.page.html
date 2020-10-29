@@ -1,0 +1,177 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Kasa</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Left side menu toggle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true" color="light">
+
+        <ion-card color="light">
+          <ion-card-header>
+            <ion-card-title>Kasa Calculator</ion-card-title>
+            <ion-card-subtitle>Input values can't be negative if none just enter 0</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <mat-horizontal-stepper linear #stepper>
+                <mat-step [stepControl]="formInfo" color="warning">
+                  <form [formGroup] = "formInfo" name="form" (ngSubmit)="submit()">
+                    <ng-template matStepLabel>Kasa $</ng-template>
+                    <div class="form-group">
+                      <ion-item color="dark">
+                          <ion-label position="floating">$100 x </ion-label>
+                          <ion-input type="number" class="form-control"  [(ngModel)]="numberFor100" formControlName="numberFor100" required></ion-input>
+                        </ion-item>
+                        </div>
+                        
+                    <div class="form-group">
+                      <ion-item color="medium">
+                          <ion-label position="floating">$50 x </ion-label>
+                          <ion-input type="number" class="form-control" formControlName="numberFor50" [(ngModel)]="numberFor50" required ></ion-input>
+                      </ion-item>
+     
+                    </div>
+    
+                    <div class="form-group">
+                      <ion-item color="dark">
+                        <ion-label position="floating">$20 x </ion-label>
+                        <ion-input type="number" class="form-control" formControlName="numberFor20" [(ngModel)]="numberFor20" required></ion-input>
+                      </ion-item>
+    
+                      </div>
+    
+                      <div class="form-group">
+                        <ion-item color="medium">
+                          <ion-label position="floating">$10 x </ion-label>
+                          <ion-input type="number" class="form-control" formControlName="numberFor10" [(ngModel)]="numberFor10" required></ion-input>
+                        </ion-item> 
+    
+                        </div>
+    
+                        <div class="form-group">
+                          <ion-item color="dark">
+                            <ion-label position="floating">$5 x </ion-label>
+                            <ion-input type="number" class="form-control" formControlName="numberFor5" [(ngModel)]="numberFor5" required></ion-input>
+                          </ion-item>
+    
+                          </div>
+    
+                          <div class="form-group">
+                            <ion-item color="medium">
+                              <ion-label position="floating">$2 x </ion-label>
+                              <ion-input type="number" class="form-control" formControlName="numberFor2" [(ngModel)]="numberFor2" required></ion-input>
+                            </ion-item>
+     
+                            </div>
+    
+                            <div class="form-group">
+                              <ion-item color="dark">
+                                <ion-label position="floating">$1 x </ion-label>
+                                <ion-input type="number" class="form-control" formControlName="numberFor1" [(ngModel)]="numberFor1" required></ion-input>
+                              </ion-item>
+    
+                              </div>
+    
+                              <div class="form-group">
+                                <ion-item color="medium">
+                                  <ion-label position="floating">$0.25 x </ion-label>
+                                  <ion-input type="number" class="form-control" formControlName="numberFor025" [(ngModel)]="numberFor025" required></ion-input>
+                                </ion-item>
+    
+                                </div>  
+    
+                                <div class="form-group">
+                                  <ion-item color="dark">
+                                    <ion-label position="floating">$0.10 x </ion-label>
+                                    <ion-input type="number" class="form-control" formControlName="numberFor010" [(ngModel)]="numberFor010" required></ion-input>
+                                  </ion-item>
+    
+                                  </div>  
+    
+                                  
+                                <div class="form-group">
+                                  <ion-item color="medium">
+                                    <ion-label position="floating">$0.05 x </ion-label>
+                                    <ion-input type="number" class="form-control" formControlName="numberFor005" [(ngModel)]="numberFor005" required></ion-input>
+                                  </ion-item>
+                                  </div>  
+                                  <div class="form-group">
+                                    <ion-item color="dark">
+                                      <label>{{result}}</label>
+                                      </ion-item>
+                                      </div>
+    
+                                      <div class="form-group">
+                                        <!-- <ion-button color="success" type="submit" (click)="proceed()" block>Next</ion-button> -->
+                                        <button [disabled] = "!formInfo.valid"  type="submit" (click)="proceed()" block mat-raised-button color="primary" matStepperNext>Next</button>
+                                        
+                                        </div>
+                                <div>
+                                  <ion-button fill="outline" color="danger" (click) = "clear()">Clear</ion-button>
+                               </div>     
+                      </form>  
+                      </mat-step>
+
+
+                      <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup" (ngSubmit)="calculateSum()">
+                          <ng-template matStepLabel>Credit $</ng-template>
+
+                            <div class="form-group">
+                              <h3>The total amount of money at kasa<b> ${{result}}</b></h3>
+                              <mat-label>Please, enter credit amount:</mat-label>
+                              <ion-item color="dark">
+                                <ion-label position="floating">$</ion-label>
+                                <ion-input type="number" class="form-control" formControlName="creditMoney" [(ngModel)]="creditMoney" required></ion-input>
+                              </ion-item>
+                            </div>
+                          <div>
+                            <button mat-stroked-button matStepperPrevious color="warn">Back</button>
+                            <button mat-raised-button matStepperNext color="accent" type="submit" [disabled] = "!secondFormGroup.valid">Next</button>
+                          </div>
+                        </form>
+                      </mat-step>
+
+                      <mat-step [stepControl]="thirdFormGroup" [editable]="isEditable">
+                        <form [formGroup]="thirdFormGroup" (ngSubmit)="finalCalculations()">
+                          <ng-template matStepLabel>Result</ng-template>
+                            <div class="form-group">
+                              <mat-label>Please, enter money that were in kasa before counting them:</mat-label>
+                              <ion-item color="dark">
+                                <ion-label position="floating">$</ion-label>
+                                <ion-input type="number" class="form-control" formControlName="moneyBefore" [(ngModel)]="moneyBefore" required></ion-input>
+                              </ion-item>
+                            </div>
+
+                          <div>
+                            <button mat-stroked-button matStepperPrevious color="warn">Back</button>
+                            <button mat-raised-button matStepperNext color="accent" type='submit'>Finish Calculations</button>
+                          </div>
+                        </form>
+                      </mat-step>
+                      <mat-step>
+                        <ng-template matStepLabel>Done</ng-template>
+                        <h3>This is the final result <b>${{result}}</b></h3>
+                        <p>You are now done.</p>
+                        <ul>
+                          <li>Current Amount in Kasa: <b>${{heros[0]}}</b></li>
+                          <li>Amount of credit: <b>${{heros[1]}}</b></li>
+                          <li>Inital money from kasa: <b>${{heros[2]}}</b></li>
+                        </ul>
+                        <div>
+                          <button mat-button matStepperPrevious>Back</button>
+                          <button mat-button (click)="stepper.reset()" (click)="clear()">Reset</button>
+                        </div>
+                      </mat-step>
+                      </mat-horizontal-stepper>
+              </ion-card-content>
+          </ion-card>
+</ion-content>
+
